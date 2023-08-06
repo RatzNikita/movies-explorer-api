@@ -5,21 +5,16 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-const rateLimit = require('express-rate-limit');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { handleException } = require('./exceptions/exceptions');
 const { createUserValidation, loginValidation } = require('./validation/celebrateSchemas');
+const { limiter } = require('./middlewares/limiter');
 
 const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb', ALLOWED_CORS = 'http://localhost:3001' } = process.env;
 
 mongoose.connect(DB_URL);
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 250,
-});
 
 const app = express();
 app.use(helmet());
