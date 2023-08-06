@@ -69,7 +69,7 @@ const movieSchema = new mongoose.Schema({
   },
   movieId: {
     type: Number,
-    minlength: 2,
+    minlength: 1,
     maxlength: 30,
     required: true,
   },
