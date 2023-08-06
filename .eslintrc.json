@@ -10,6 +10,7 @@
       }
     ],
     "func-names": "off",
-    "no-extraneous-dependencies": 0
+    "no-extraneous-dependencies": 0,
+    "consistent-return": "off"
   }
 }

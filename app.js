@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
@@ -23,7 +22,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(limiter);
 app.use(requestLogger);
 
-// eslint-disable-next-line consistent-return
 app.use((req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;

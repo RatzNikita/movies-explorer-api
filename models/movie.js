@@ -37,7 +37,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return urlRegex.test(v); //eslint-disable-line
+        return urlRegex.test(v);
       },
       message: (props) => `${props.value} некорректная ссылка!`,
     },
@@ -47,7 +47,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return urlRegex.test(v); //eslint-disable-line
+        return urlRegex.test(v);
       },
       message: (props) => `${props.value} некорректная ссылка!`,
     },
@@ -57,7 +57,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator(v) {
-        return urlRegex.test(v); //eslint-disable-line
+        return urlRegex.test(v);
       },
       message: (props) => `${props.value} некорректная ссылка!`,
     },
