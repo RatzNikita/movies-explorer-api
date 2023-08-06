@@ -9,6 +9,7 @@
         ]
       }
     ],
-    "func-names": "off"
+    "func-names": "off",
+    "no-extraneous-dependencies": 0
   }
 }

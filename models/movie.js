@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {urlRegex} = require('../validation/validationConstants');
+const { urlRegex } = require('../validation/validationConstants');
 
 const movieSchema = new mongoose.Schema({
   country: {
@@ -85,6 +85,6 @@ const movieSchema = new mongoose.Schema({
     maxlength: 30,
     required: true,
   },
-}, {versionKey: false});
+}, { versionKey: false });
 
 module.exports = mongoose.model('movie', movieSchema);

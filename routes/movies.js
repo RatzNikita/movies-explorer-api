@@ -6,7 +6,7 @@ const {
   getMovies,
   removeMovie,
 } = require('../controllers/movies');
-const {postMovieValidation,movieIdValidation} = require('../validation/celebrateSchemas');
+const { postMovieValidation, movieIdValidation } = require('../validation/celebrateSchemas');
 
 router.get('', getMovies);
 router.post('', postMovieValidation, postMovie);
