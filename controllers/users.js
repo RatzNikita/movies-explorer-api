@@ -26,7 +26,10 @@ module.exports.updateProfile = (req, res, next) => {
   const { name, email } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true })
     .then((user) => {
-      res.send(user);
+      res.send({
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch(next);
 };
@@ -42,9 +45,12 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getUserInfo = (req, res, next) => {
-  User.findById(req.user._id).select('+email')
+  User.findById(req.user._id)
     .then((user) => {
-      res.send(user);
+      res.send({
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch(next);
 };
