@@ -1,17 +1,20 @@
-require('dotenv').config();
+require('dotenv')
+  .config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { login, createUser } = require('./controllers/users');
-const auth = require('./middlewares/auth');
 const { handleException } = require('./exceptions/exceptions');
-const { createUserValidation, loginValidation } = require('./validation/celebrateSchemas');
 const { limiter } = require('./middlewares/limiter');
+const router = require('./routes');
 
-const { PORT = 3000, DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb', ALLOWED_CORS = 'http://localhost:3001' } = process.env;
+const {
+  PORT = 3000,
+  DB_URL = 'mongodb://127.0.0.1:27017/bitfilmsdb',
+  ALLOWED_CORS = 'http://localhost:3001',
+} = process.env;
 
 mongoose.connect(DB_URL);
 
@@ -26,7 +29,8 @@ app.use((req, res, next) => {
   const { origin } = req.headers;
   const { method } = req;
   const requestHeaders = req.headers['access-control-request-headers'];
-  if (ALLOWED_CORS.split(', ').includes(origin)) {
+  if (ALLOWED_CORS.split(', ')
+    .includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
   }
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
@@ -38,16 +42,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/signin', loginValidation, login);
-app.use('/signup', createUserValidation, createUser);
-
-app.use(auth);
-app.use('/users', require('./routes/users'));
-app.use('/movies', require('./routes/movies'));
-
-app.use('/', (req, res) => {
-  handleException({ name: 'PageNotFound' }, req, res);
-});
+router(app);
 
 app.use(errorLogger);
 app.use(errors());

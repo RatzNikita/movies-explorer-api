@@ -3,16 +3,27 @@ const { handleException } = require('../exceptions/exceptions');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
-    .populate('owner')
-    .then((movies) => res.send(movies))
+    .then((movies) => movies.filter((movie) => movie.owner.equals(req.user._id)))
+    .then((movies) => {
+      if (movies.length < 1) {
+        handleException({ name: 'NotFound' }, req, res);
+      } else {
+        res.send(movies);
+      }
+    })
     .catch(next);
 };
 
 module.exports.postMovie = (req, res, next) => {
   const owner = req.user._id;
-  Movie.create({ ...req.body, owner })
+  Movie.create({
+    ...req.body,
+    owner,
+  })
     .then((movie) => {
-      movie.populate('owner').then((populatedMovie) => res.status(201).send(populatedMovie));
+      movie.populate('owner')
+        .then((populatedMovie) => res.status(201)
+          .send(populatedMovie));
     })
     .catch(next);
 };
@@ -23,7 +34,8 @@ module.exports.removeMovie = (req, res, next) => {
       if (!movie) {
         handleException({ name: 'NotFound' }, req, res);
       } else if (movie.owner.equals(req.user._id)) {
-        movie.deleteOne().then(() => res.send({ message: 'Фильм удалён' }));
+        movie.deleteOne()
+          .then(() => res.send({ message: 'Фильм удалён' }));
       } else {
         handleException({ name: 'NotPermissions' }, req, res);
       }
