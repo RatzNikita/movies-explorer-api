@@ -13,18 +13,18 @@ const movieIdValidation = celebrate({
 
 const postMovieValidation = celebrate({
   body: {
-    country: Joi.string().required().min(2).max(30),
-    director: Joi.string().required().min(2).max(30),
-    duration: Joi.number().required().min(2).max(30),
+    country: Joi.string().required().min(2).max(1000),
+    director: Joi.string().required().min(2).max(1000),
+    duration: Joi.number().required(),
     owner: Joi.string().length(24).hex().required(),
-    year: Joi.string().required().min(2).max(30),
-    description: Joi.string().required().min(2).max(300),
+    year: Joi.string().required().min(2).max(1000),
+    description: Joi.string().required().min(2).max(5000),
     image: Joi.string().required().pattern(urlRegex),
     trailerLink: Joi.string().required().pattern(urlRegex),
     thumbnail: Joi.string().required().pattern(urlRegex),
-    nameRU: Joi.string().required().min(2).max(30),
-    nameEN: Joi.string().required().min(2).max(30),
-    movieId: Joi.number().required().min(1).max(30),
+    nameRU: Joi.string().required().min(2).max(1000),
+    nameEN: Joi.string().required().min(2).max(1000),
+    movieId: Joi.number().required().min(1).max(1000),
   },
 });
 
