@@ -6,7 +6,7 @@ module.exports.getMovies = (req, res, next) => {
     .then((movies) => movies.filter((movie) => movie.owner.equals(req.user._id)))
     .then((movies) => {
       if (movies.length < 1) {
-        handleException({ name: 'NotFound' }, req, res);
+        res.send([])
       } else {
         res.send(movies);
       }
